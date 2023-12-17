@@ -1,0 +1,26 @@
+service: reto-tecnico-indra
+
+plugins:
+  - serverless-esbuild # used for compiling/packaging the Typescript code
+  - serverless-offline # used for local execution
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-west-1
+  timeout: 30   # repository wide Lambda timeout
+
+functions:
+  # Serverless Framework specific syntax
+  getPlanets:
+    handler: ./src/handler.getAllPlanets
+    events:
+      - httpApi:
+          path: /api/planets
+          method: GET
+  getPlanet:
+    handler: ./src/handler.getPlanet
+    events:
+      - httpApi:
+          path: /api/planets/{id}
+          method: GET
